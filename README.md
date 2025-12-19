@@ -1,72 +1,141 @@
-# FlexyMiny UI
+# Signals UI — Compact Authoritative Summary
 
-A lightweight, flexible and minimal React component library for modern web applications.
+## One-line Definition
+Signal UI is a source-first, minimalist, framework-agnostic component library where props are signals of intention, not configuration. Users copy files, own the code, and edit behavior directly.
 
-## Installation
+## Core Non-Negotiable Principles
 
-```bash
-npm install flexyminy-ui
-```
+### 1. Ownership over abstraction
+- Components are copied into the user's repo
+- No vendor lock-in, no runtime dependency
+- No hidden logic, helpers, or black boxes
+- The file is the product — users read, edit, and ship it
 
-## Getting Started
+### 2. Intention over configuration
+- No `variant="primary"`, no sizes enums, no schemas
+- Props are plain English signals: `primary`, `lg`, `hoverEnlarge`
+- Signals express what the user wants, not how it's configured
 
-Configure Tailwind to Include FlexyMiny UI Components
+### 3. Signals (what they are / are not)
+- Signals = static, declarative inputs
+- They are not reactive systems, observers, state, or Solid/React signals
+- Components simply read props → output classes/attributes
 
-**Important**: You need to tell Tailwind CSS to scan the FlexyMiny UI package for component classes. This is done using the `@source` directive in your main CSS file.
+### 4. Signals, not variants
+- No variant explosion
+- No combinatorial APIs
+- Signals are composable, optional, readable
 
-In your main CSS file (usually `src/index.css` or `src/styles.css`), add:
+### 5. Minimal foundation, infinite extension
+Each component ships with:
+- One semantic foundation
+- Zero forced variations
+- Everything else is opt-in and user-editable
 
-```css
-@import "tailwindcss";
-@source "../node_modules/flexyminy-ui";
-```
+### 6. HTML already has state — respect it
+- HTML provides `:hover`, `:focus`, `:active`, keyboard, semantics
+- Signal UI listens to HTML state and styles on top
+- Never re-model browser behavior
 
-**Explanation**: 
-- `@import "tailwindcss";` imports the base Tailwind CSS directives
-- `@source "../node_modules/flexyminy-ui";` tells Tailwind to scan the installed package directory for CSS classes used in the components
+## Signal Types
 
-**Note**: 
-- `@source` directive is takes relative path from your CSS file to the package directory.
+### A. Structural signals (identity)
+Define what the component is.
+- Examples: `primary`, `secondary`, `sm`, `lg`
+- Grouped (tone, size, shape)
+- Only one per group applies
+- If multiple → last one wins
+- No warnings, no magic
 
+### B. Behavioral signals (interaction intent)
+Define how it behaves.
+- Verb-intent naming: `hoverEnlarge`, `pressShrink`, `focusJump`
+- Optional, expressive, memorable
+- Not bulk-loaded
 
-## Basic Usage
+### C. JS-level signals
+Map intent to tiny inline JS behavior.
+- Examples: `submitForm`, `confirmOnClick`
+- Implemented inline, explicitly
+- No helpers or abstractions
 
-```jsx
-import { Button } from 'flexyminy-ui';
+## Signal Resolution Rules (Critical)
+- Signals are grouped (tone, size, behavior)
+- One signal per group
+- Multiple passed → last wins
+- Deterministic, readable, low cognitive load
+- No runtime validation or warnings
 
-function App() {
-  return (
-    <Button onClick={() => console.log('Button clicked')}>
-      Click me
-    </Button>
-  );
-}
-```
+## Mandatory Component File Structure
+Every component file must contain:
+- Docblock at top (this is the documentation)
+- Title + one-line summary
+- Foundation
+- Signals grouped (structural / size / interaction / JS-level)
+- Defaults
+- 1–2 usage examples
+- Single exported function: `export function ComponentName(props) { ... }`
+- Explicit props: Signals first, then `className`, `children`, `...props`
+- Single classes array
+- One-line `if (signal) classes.push("...")`
+- No maps, no resolvers, no helpers, no filters
+- Clear commented sections:
+  - Foundation
+  - Tone / Visual
+  - Size
+  - Shape
+  - Interaction
+  - JS behavior
+  - Escape hatch
+- Return semantic HTML
+- Spread `...props`
+- `className={classes.join(" ")}`
 
-## Components
+## Coding Rules (Strict)
+- Boring, explicit JS/JSX
+- No helper functions
+- No class maps
+- No config files
+- No DSLs
+- No Tailwind configs or preview tooling shipped
+- Accessibility included inline (semantic element, focus-visible)
 
-### Button
+## Menus & Complex Widgets Pattern
+Public API: one exported component (e.g. `Menu.jsx`)
+- Accepts:
+  - `items` array
+  - top-level signals (`compact`, `dark`, `alignRight`)
+- Internals:
+  - `MenuButton.jsx`, `MenuList.jsx`, `MenuItem.jsx`
+  - Live in same copied folder
+  - Meant to be edited by the user
+- Signals cascade inward
+- Minimal inline keyboard logic (arrows, Enter, Escape)
+- No external state machines
+- Items shape example: `{ label, onPress, href?, divider?, danger?, icon? }`
 
-A simple, styled button component with hover effects.
+## Documentation Rules
+- The file is the documentation
+- No external docs required to use components
+- Comments explain intent and defaults
+- External docs only optional for philosophy
 
-**Props:**
-- Accepts all standard HTML button attributes
-- `children` - Button content
+## CLI Philosophy (Later)
+- CLI only copies files
+- No generators, no prompts, no intelligence
+- Ownership stays local
 
-**Styling:**
-- Uses Tailwind CSS classes for styling
-- Pink background with blue text on default
-- Black background with white text on hover
+## Community & Extension
+- Community shares plain files
+- Users manually copy what they want
+- No plugins, no auto-install
+- Grows horizontally, never bloated
 
-## Dependencies
-
-- React (peer dependency, >=16.8.0)
-- Tailwind CSS (for styling)
-
-## License
-
-MIT
-
----
-
-**Published on npm as [flexyminy-ui](https://www.npmjs.com/package/flexyminy-ui)**
+## Final Frozen Definition
+Signal UI is a minimalist component library built on intention over configuration.
+- Components are simple, ownable files.
+- Props are signals.
+- Signals express intent.
+- HTML provides state.
+- We only listen and style.
+- Nothing more. Nothing less.

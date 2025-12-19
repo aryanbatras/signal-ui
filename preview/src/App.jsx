@@ -1,17 +1,15 @@
-import { useState } from 'react'
-import { Button } from 'minimalist-ui'
+import { Button } from 'signals-ui'
 
-function App() {
-  const [count, setCount] = useState(0)
-
+export default function App() {
   return (
-    <>
-    <Button>Click me</Button>
-      <div className="min-h-screen min-w-screen bg-black text-blue-500 text-4xl">
-        Hello World ! Sir
-      </div>
-    </>
-  )
+    <div>
+    <button>Click Me</button>
+    <Button secondary md pill hoverEnlarge>Click me</Button>
+    
+    Hey
+    <p>This is a test paragraph to verify styling.</p>
+    <Button primary lg rounded hoverInvert submitForm>Submit</Button>
+    <Button secondary sm rounded hoverInvert confirmOnClick>Delete</Button>
+    </div>
+  );
 }
-
-export default App

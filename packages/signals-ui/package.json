@@ -1,7 +1,7 @@
 {
-  "name": "flexyminy-ui",
+  "name": "signals-ui",
   "version": "0.0.1",
-  "description": "A lightweight, flexible and minimal React component library for modern web applications",
+  "description": "A minimalist, framework-agnostic component library where components respond to signals of intention, not rigid variants or configuration APIs",
   "type": "module",
   "main": "./index.js",
   "exports": {
@@ -19,13 +19,13 @@
     "ui",
     "components",
     "minimalist",
-    "tailwind"
+    "signals",
+    "signal",
+    "intention",
+    "framework-agnostic"
   ],
-  "author": "",
+  "author": "Aryan Batra",
   "license": "MIT",
-  "peerDependencies": {
-    "react": ">=16.8.0"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/aryanbatras/minimalist-ui.git"
