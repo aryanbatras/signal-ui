@@ -1,109 +1,130 @@
 /**
- * Button — Signal UI (canonical)
+ * Button — Signal UI
  *
- * Foundation:
- * - semantic <button>, minimal a11y (focus-visible)
+ * This file is intentionally incomplete.
+ * It declares stable foundations and open intent slots.
  *
- * Signals:
- * - Structural: primary, secondary
- * - Size: sm, md, lg
- * - Shape: rounded, pill
- * - Interaction: hoverEnlarge, hoverInvert, pressShrink
- * - JS-level: submitForm, confirmOnClick
- *
- * Defaults:
- * - If no size provided: md
- * - If no tone provided: neutral
- *
- * Example:
- * <Button primary lg rounded hoverEnlarge>Continue</Button>
+ * You are expected to evolve this file over time.
  */
 
 export function Button({
-  // structural
+  /* ==================================================
+   * FOUNDATIONAL INTENT (rarely changes)
+   * ================================================== */
+
   primary,
   secondary,
 
-  // sizes
   sm,
   md,
   lg,
 
-  // shape
-  rounded,
-  pill,
+  /* ==================================================
+   * BRAND INTENT SLOT
+   * Your product’s visual language lives here.
+   * Start empty. Grow slowly.
+   * ================================================== */
 
-  // interaction
-  hoverEnlarge,
-  hoverInvert,
-  pressShrink,
+  // example:
+  // brandSoft,
+  // brandLoud,
 
-  // js-level
+  /* ==================================================
+   * MOTION INTENT SLOT
+   * Motion is optional and local to your taste.
+   * This slot stays empty by default.
+   * ================================================== */
+
+  // example:
+  // hoverFadeUp,
+  // hoverSpring,
+
+  /* ==================================================
+   * EXPERIMENTAL INTENT SLOT
+   * Unsafe ideas, A/B tests, wild stuff.
+   * Expect churn here.
+   * ================================================== */
+
+  // example:
+  // glowOnHover,
+  // pulseOnIdle,
+
+  /* ==================================================
+   * NATIVE BEHAVIOR
+   * ================================================== */
+
   submitForm,
-  confirmOnClick,
-  onClick,
 
-  // escape
+  /* ==================================================
+   * ESCAPE
+   * ================================================== */
+
   className = "",
   children,
   ...props
 }) {
   const classes = [];
 
-  // -----------------------
-  // Foundation
-  // -----------------------
+  /* ==================================================
+   * FOUNDATION (guarantees)
+   * ================================================== */
+
   classes.push(
     "inline-flex items-center justify-center",
-    "select-none",
+    "font-medium",
     "transition-all duration-150",
-    "focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+    "focus:outline-none focus-visible:ring-2",
+    "disabled:opacity-50 disabled:cursor-not-allowed"
   );
 
-  // -----------------------
-  // Tone / visual
-  // -----------------------
-  if (primary) classes.push("bg-pink-600 text-white");
-  if (secondary) classes.push("bg-white text-black border");
-  if (!primary && !secondary) classes.push("bg-neutral-100 text-neutral-900");
+  /* ==================================================
+   * FOUNDATIONAL RESOLUTION
+   * ================================================== */
 
-  // -----------------------
-  // Sizes
-  // -----------------------
+  if (primary) classes.push("bg-neutral-900 text-white");
+  else if (secondary) classes.push("bg-white text-neutral-900 border");
+  else classes.push("bg-neutral-100 text-neutral-900");
+
   if (sm) classes.push("px-2 py-1 text-sm");
-  if (md) classes.push("px-4 py-2 text-base");
-  if (lg) classes.push("px-6 py-3 text-lg");
-  if (!sm && !md && !lg) classes.push("px-4 py-2 text-base"); // default
+  else if (md) classes.push("px-4 py-2 text-base");
+  else if (lg) classes.push("px-6 py-3 text-lg");
+  else classes.push("px-4 py-2 text-base");
 
-  // -----------------------
-  // Shape
-  // -----------------------
-  if (rounded) classes.push("rounded-md");
-  if (pill) classes.push("rounded-full");
+  /* ==================================================
+   * BRAND SLOT (empty by default)
+   * ================================================== */
 
-  // -----------------------
-  // Interaction (verb-intent)
-  // -----------------------
-  if (hoverEnlarge) classes.push("hover:scale-105");
-  if (hoverInvert) classes.push("hover:bg-white hover:text-black");
-  if (pressShrink) classes.push("active:scale-95");
+  // if (brandSoft) classes.push(...)
+  // if (brandLoud) classes.push(...)
 
-  // -----------------------
-  // JS-level signals (tiny inline behavior)
-  // -----------------------
+  /* ==================================================
+   * MOTION SLOT (empty by default)
+   * ================================================== */
+
+  // if (hoverFadeUp) classes.push(...)
+  // if (hoverSpring) ...
+
+  /* ==================================================
+   * EXPERIMENTAL SLOT
+   * ================================================== */
+
+  // try things here, delete freely
+
+  /* ==================================================
+   * NATIVE BEHAVIOR
+   * ================================================== */
+
   if (submitForm) props.type = "submit";
-  if (confirmOnClick) onClick = e => { if (confirm("Are you sure?")) typeof props.onClick === "function" && props.onClick(e); };
 
-  // -----------------------
-  // Escape hatch
-  // -----------------------
+  /* ==================================================
+   * FINAL OVERRIDE
+   * ================================================== */
+
   if (className) classes.push(className);
 
   return (
-    <button {...props} onClick={onClick} className={classes.join(" ")}>
+    <button {...props} className={classes.join(" ")}>
       {children}
     </button>
   );
 }
-
-
