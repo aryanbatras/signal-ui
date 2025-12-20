@@ -1,64 +1,113 @@
 /**
- * Button — Signal UI
+ * Button — Signal UI (Canonical Single-File Component)
  *
- * This file is intentionally incomplete.
- * It declares stable foundations and open intent slots.
+ * PURPOSE
+ * -------
+ * A complete, ownable button built on intent.
+ * This file is the documentation.
+ * This file is the system.
  *
- * You are expected to evolve this file over time.
+ * CONTRACT (GUARANTEES)
+ * --------------------
+ * - Semantic <button>
+ * - Keyboard accessible
+ * - Focus-visible
+ * - Disabled is respected
+ * - Works without motion
+ * - Works without icons
+ * - Works without JS enhancements
+ *
+ * MENTAL MODEL
+ * ------------
+ * - Props are signals (boolean only)
+ * - Signals express intent
+ * - Intent is interpreted in layers
+ * - Layers are independent dimensions
+ * - Defaults are structural, not implicit
+ *
+ * HOW TO EXTEND
+ * -------------
+ * - Add a new signal (boolean)
+ * - Decide which layer reacts to it
+ * - Add one `if (signal)` line
+ * - Done
+ *
+ * NOTHING IS HIDDEN
+ * -----------------
+ * - No helpers
+ * - No variants
+ * - No config
+ * - No magic
  */
 
 export function Button({
-  /* ==================================================
-   * FOUNDATIONAL INTENT (rarely changes)
-   * ================================================== */
-
+  /* --------------------------------------------------
+   * SEMANTIC INTENT (what this button means)
+   * -------------------------------------------------- */
   primary,
   secondary,
+  neutral,
+  success,
+  warning,
+  danger,
 
+  /* --------------------------------------------------
+   * SURFACE INTENT (how strong it appears)
+   * -------------------------------------------------- */
+  solid,
+  soft,
+  outline,
+  ghost,
+  link,
+
+  /* --------------------------------------------------
+   * SIZE / DENSITY
+   * -------------------------------------------------- */
+  xs,
   sm,
   md,
   lg,
 
-  /* ==================================================
-   * BRAND INTENT SLOT
-   * Your product’s visual language lives here.
-   * Start empty. Grow slowly.
-   * ================================================== */
+  /* --------------------------------------------------
+   * SHAPE
+   * -------------------------------------------------- */
+  square,
+  rounded,
+  pill,
+  circle,
 
-  // example:
-  // brandSoft,
-  // brandLoud,
+  /* --------------------------------------------------
+   * COMPOSITION
+   * -------------------------------------------------- */
+  iconOnly,
+  hasIcon,
+  loading,
 
-  /* ==================================================
-   * MOTION INTENT SLOT
-   * Motion is optional and local to your taste.
-   * This slot stays empty by default.
-   * ================================================== */
+  /* --------------------------------------------------
+   * LAYOUT
+   * -------------------------------------------------- */
+  block,
 
-  // example:
-  // hoverFadeUp,
-  // hoverSpring,
+  /* --------------------------------------------------
+   * BEHAVIOR (optional motion / feedback)
+   * -------------------------------------------------- */
+  hoverMotion,
+  pressMotion,
 
-  /* ==================================================
-   * EXPERIMENTAL INTENT SLOT
-   * Unsafe ideas, A/B tests, wild stuff.
-   * Expect churn here.
-   * ================================================== */
+  /* --------------------------------------------------
+   * STATE
+   * -------------------------------------------------- */
+  disabled,
+  active,
 
-  // example:
-  // glowOnHover,
-  // pulseOnIdle,
-
-  /* ==================================================
-   * NATIVE BEHAVIOR
-   * ================================================== */
-
+  /* --------------------------------------------------
+   * JS-LEVEL INTENT
+   * -------------------------------------------------- */
   submitForm,
 
-  /* ==================================================
-   * ESCAPE
-   * ================================================== */
-
+  /* --------------------------------------------------
+   * ESCAPE HATCH
+   * -------------------------------------------------- */
   className = "",
   children,
   ...props
@@ -66,65 +115,105 @@ export function Button({
   const classes = [];
 
   /* ==================================================
-   * FOUNDATION (guarantees)
+   * FOUNDATION (always applied)
    * ================================================== */
-
   classes.push(
     "inline-flex items-center justify-center",
+    "select-none",
     "font-medium",
     "transition-all duration-150",
-    "focus:outline-none focus-visible:ring-2",
-    "disabled:opacity-50 disabled:cursor-not-allowed"
+    "focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
+    "disabled:opacity-50 disabled:pointer-events-none"
   );
 
   /* ==================================================
-   * FOUNDATIONAL RESOLUTION
+   * SEMANTIC LAYER
    * ================================================== */
+  if (primary) classes.push("text-white");
+  if (secondary) classes.push("text-neutral-900");
+  if (neutral) classes.push("text-neutral-800");
+  if (success) classes.push("text-green-700");
+  if (warning) classes.push("text-yellow-800");
+  if (danger) classes.push("text-red-700");
 
-  if (primary) classes.push("bg-neutral-900 text-white");
-  else if (secondary) classes.push("bg-white text-neutral-900 border");
-  else classes.push("bg-neutral-100 text-neutral-900");
-
-  if (sm) classes.push("px-2 py-1 text-sm");
-  else if (md) classes.push("px-4 py-2 text-base");
-  else if (lg) classes.push("px-6 py-3 text-lg");
-  else classes.push("px-4 py-2 text-base");
+  if (!primary && !secondary && !neutral && !success && !warning && !danger) {
+    classes.push("text-neutral-900");
+  }
 
   /* ==================================================
-   * BRAND SLOT (empty by default)
+   * SURFACE LAYER
    * ================================================== */
+  if (solid) classes.push("bg-current");
+  if (soft) classes.push("bg-current/10");
+  if (outline) classes.push("border border-current");
+  if (ghost) classes.push("bg-transparent");
+  if (link) classes.push("bg-transparent underline p-0");
 
-  // if (brandSoft) classes.push(...)
-  // if (brandLoud) classes.push(...)
+  if (!solid && !soft && !outline && !ghost && !link) {
+    classes.push("bg-neutral-100");
+  }
 
   /* ==================================================
-   * MOTION SLOT (empty by default)
+   * SIZE LAYER
    * ================================================== */
+  if (xs) classes.push("px-2 py-1 text-xs");
+  if (sm) classes.push("px-3 py-1.5 text-sm");
+  if (md) classes.push("px-4 py-2 text-base");
+  if (lg) classes.push("px-6 py-3 text-lg");
 
-  // if (hoverFadeUp) classes.push(...)
-  // if (hoverSpring) ...
+  if (!xs && !sm && !md && !lg) {
+    classes.push("px-4 py-2 text-base");
+  }
 
   /* ==================================================
-   * EXPERIMENTAL SLOT
+   * SHAPE LAYER
    * ================================================== */
+  if (square) classes.push("rounded-none");
+  if (rounded) classes.push("rounded-md");
+  if (pill) classes.push("rounded-full");
+  if (circle) classes.push("rounded-full aspect-square p-0");
 
-  // try things here, delete freely
+  if (!square && !rounded && !pill && !circle) {
+    classes.push("rounded-md");
+  }
 
   /* ==================================================
-   * NATIVE BEHAVIOR
+   * COMPOSITION LAYER
    * ================================================== */
+  if (iconOnly) classes.push("p-2");
+  if (hasIcon) classes.push("gap-2");
+  if (loading) classes.push("pointer-events-none opacity-70");
 
+  /* ==================================================
+   * LAYOUT LAYER
+   * ================================================== */
+  if (block) classes.push("w-full");
+
+  /* ==================================================
+   * BEHAVIOR LAYER
+   * ================================================== */
+  if (hoverMotion) classes.push("hover:scale-105");
+  if (pressMotion) classes.push("active:scale-95");
+
+  /* ==================================================
+   * STATE LAYER
+   * ================================================== */
+  if (active) classes.push("ring-2 ring-current");
+
+  /* ==================================================
+   * JS-LEVEL INTENT
+   * ================================================== */
   if (submitForm) props.type = "submit";
+  if (disabled) props.disabled = true;
 
   /* ==================================================
-   * FINAL OVERRIDE
+   * ESCAPE HATCH
    * ================================================== */
-
   if (className) classes.push(className);
 
   return (
     <button {...props} className={classes.join(" ")}>
-      {children}
+      {loading ? "Loading…" : children}
     </button>
   );
 }
