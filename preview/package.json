@@ -14,7 +14,7 @@
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "tailwindcss": "^4.1.18",
-    "signals-ui": "file:../packages/signals-ui"
+    "signal-layers": "file:../packages/signal-layers"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",

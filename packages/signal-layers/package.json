@@ -1,11 +1,11 @@
 {
-  "name": "signals-ui",
+  "name": "signal-layers",
   "version": "0.0.5",
   "description": "A minimalist, framework-agnostic component library where components respond to signals of intention, not rigid variants or configuration APIs",
   "type": "module",
   "main": "./index.js",
   "bin": {
-    "signals-ui": "./bin/signals-ui.js"
+    "signal-layers": "./bin/signal-layers.js"
   },
   "exports": {
     ".": "./index.js",

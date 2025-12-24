@@ -178,6 +178,8 @@ export function Button(contract = {}) {
   const size     = layer("size");
   const shape    = layer("shape");
   const layout   = layer("layout");
+  const hover    = layer("hover");
+  const active   = layer("active");
   const override = layer("override");
 
   /* ────────────────────────────────────────────────────────────────────────────
@@ -195,6 +197,10 @@ export function Button(contract = {}) {
 
   signals.primary   && semantic("bg-blue-500 text-neutral-100", "primary");
   signals.secondary && semantic("bg-pink-800 text-neutral-100", "secondary");
+  signals.success && semantic("bg-green-500 text-white", "success");
+  signals.warning && semantic("bg-yellow-500 text-black", "warning");
+  signals.danger  && semantic("bg-red-500 text-white", "danger");
+  signals.info    && semantic("bg-cyan-500 text-white", "info");
 
   signals.xs && size("px-2 py-1 text-xs", "xs");
   signals.sm && size("px-3 py-1.5 text-sm", "sm");
@@ -212,6 +218,23 @@ export function Button(contract = {}) {
   signals.link    && surface("bg-transparent underline p-0", "link");
 
   signals.block && layout("w-full", "block");
+  signals.inline && layout("inline-flex", "inline");
+  signals.center && layout("mx-auto", "center");
+
+    /* ────────────────────────────────────────────────────────────────────────────
+   * ANIMATION SIGNALS
+   * ──────────────────────────────────────────────────────────────────────────── */
+
+  // Hover animations
+  signals.hoverEnlarge && hover("hover:scale-105 transition-transform duration-200", "hoverEnlarge").transitionAll;
+  signals.hoverShrink && hover("hover:scale-95 transition-transform duration-200", "hoverShrink").transitionAll;
+  signals.hoverLift && hover("hover:-translate-y-0.5 transition-all duration-200", "hoverLift").transitionAll;
+  signals.hoverGlow && hover("hover:shadow-lg hover:shadow-blue-500/20 transition-all duration-300", "hoverGlow").transitionAll;
+
+  // Active animations
+  signals.activeShrink && active("active:scale-95 transition-transform", "activeShrink").transitionAll;
+  signals.activePulse && active("active:animate-pulse", "activePulse").transitionAll;
+  signals.activeDepth && active("active:translate-y-0.5", "activeDepth").transitionAll;
 
   /* ────────────────────────────────────────────────────────────────────────────
    * ESCAPE HATCH

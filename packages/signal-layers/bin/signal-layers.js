@@ -21,7 +21,7 @@ function addComponent(componentName) {
   const targetFile = join(targetDir, `${componentName}.jsx`);
 
   if (!existsSync(sourceFile)) {
-    console.error(`Component "${componentName}" not found in signals-ui`);
+    console.error(`Component "${componentName}" not found in signal-layers`);
     process.exit(1);
   }
 
@@ -79,15 +79,15 @@ function listComponents() {
 function showHelp() {
   console.log(`
 Usage:
-  signals-ui add <component>    Add a component to your project
-  signals-ui list               List available components
-  signals-ui copy               Copy all components
-  signals-ui help               Show this help
+  signal-layers add <component>    Add a component to your project
+  signal-layers list               List available components
+  signal-layers copy               Copy all components
+  signal-layers help               Show this help
 
 Examples:
-  signals-ui add button
-  signals-ui copy
-  signals-ui list
+  signal-layers add button
+  signal-layers copy
+  signal-layers list
 `);
 }
 
@@ -119,6 +119,7 @@ switch (command) {
     break;
   
   default:
-    console.error('Unknown command. Use "signals-ui help" for usage.');
+    console.error('Unknown command. Use "signal-layers help" for usage.');
+    showHelp();
     process.exit(1);
 }
