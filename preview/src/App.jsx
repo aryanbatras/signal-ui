@@ -9,14 +9,11 @@ export default function App() {
         image="https://images.pexels.com/photos/1525041/pexels-photo-1525041.jpeg"
         buttonLabel="Explore More"
         onButtonClick={() => alert("Button clicked")}
-        imageLandscape
-        transparent
         interactive
-        lg
       /> */}
+      {/* <Button neumorphism xl hoverLift>Button</Button> */}
+      {/* <ProgressBar value={50} success lg/> */}
       {/* <Spinner transparent /> */}
-      <Button cta rounded lg hoverLift>Button</Button>
-      <ProgressBar value={50} primary lg/>
     </div>
   );
 }
