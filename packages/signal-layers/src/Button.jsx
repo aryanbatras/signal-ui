@@ -1,3 +1,4 @@
+import { useState, useRef } from "react";
 export function Button(contract = {}) {
   /* ────────────────────────────────────────────────────────────────────────────
    * CONTRACT
@@ -16,6 +17,7 @@ export function Button(contract = {}) {
    *   Border: border, noBorder, roundedBorder, pillBorder, circleBorder
    *   Hover: hoverEnlarge, hoverShrink, hoverLift, hoverFade, hoverBorder, hoverNone
    *   Active: activeShrink, activeRipple, activeExplode, activeSlide, activeNone
+   *   Ripple: ripple
    *
    * Data:
    *   children - Button content
@@ -40,19 +42,44 @@ export function Button(contract = {}) {
    * CONTRACT TOOLS
    * ──────────────────────────────────────────────────────────────────────────── */
 
-  const [inputSignal, layerSignal, dataSignal] = [{ ...contract }, {}, {}];
+  const [inputSignal, layerSignal, dataSignal, stateSignal] = [{ ...contract }, {}, {}, {}];
   
-  const layer = (name) => (className) =>
-    (layerSignal[name] ||= [],
-    (layerSignal[name][0] = className));
+ const layer = (name, scope = "btn") => (className) =>
+    (layerSignal[scope] ||= {},
+    layerSignal[scope][name] ||= [],
+    (layerSignal[scope][name][0] = className));
   
   const data = (name, key = name) =>
     inputSignal[key] && (dataSignal[name] = inputSignal[key]);
 
+  const state = (name, priority = 0, initial = false) => (
+    (stateSignal._hooks ||= {})[name] ||= (() => {
+        const [get, set] = useState(initial);
+        return { get, set };
+    })(),
+    priority &&
+        (!stateSignal._priority || priority > stateSignal._priority) &&
+        (stateSignal[name] = stateSignal._hooks[name],
+        stateSignal._priority = priority)
+    );
+
+    const classes = (layers = {}) =>
+    Object.values(layers).map(l => l[0]).filter(Boolean).join(" ");
+
+    const rippleCounterRef = useRef(0);
+    const handleRippleClick = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    stateSignal.ripples?.set([...(stateSignal.ripples?.get || []), { 
+        id: ++rippleCounterRef.current, 
+        x: e.clientX - rect.left, 
+        y: e.clientY - rect.top 
+    }]);
+    };
+
   /* ────────────────────────────────────────────────────────────────────────────
    * BASE LAYER
    * ──────────────────────────────────────────────────────────────────────────── */
-   let btn;
+   let btn, ripple;
     (() => 
         (
             btn = {
@@ -65,7 +92,12 @@ export function Button(contract = {}) {
                 hover:layer("hover"),       
                 active:layer("active"),     
                 layout:layer("layout"),     
-                animation:layer("animation"),  
+                animation:layer("animation"),
+                rippleBase: layer("ripple")
+            },
+            ripple = {
+                base: layer("base", "ripple"),
+                animation: layer("animation", "ripple")
             }
         )
     )(),
@@ -83,7 +115,10 @@ export function Button(contract = {}) {
             btn.hover("hover:scale-105 hover:shadow-md"),
             btn.active("active:scale-90 active:shadow-md"),
             btn.layout("flex items-center justify-center"),
-            btn.animation("transition-all duration-300 cursor-pointer")
+            btn.animation("transition-all duration-300 cursor-pointer"),
+            btn.rippleBase("relative overflow-hidden"),
+            ripple.base("absolute bg-white/30 rounded-full pointer-events-none"),
+            ripple.animation("-translate-x-1/2 -translate-y-1/2 transition-all")
         )
     )();
   /* ────────────────────────────────────────────────────────────────────────────
@@ -231,29 +266,57 @@ export function Button(contract = {}) {
             inputSignal["aria-haspopup"] && data("aria-haspopup"),
             inputSignal["aria-expanded"] && data("aria-expanded"),
             inputSignal.onMouseEnter     && data("onMouseEnter"),
-            inputSignal.onMouseLeave     && data("onMouseLeave")
+            inputSignal.onMouseLeave     && data("onMouseLeave"),
+            state("ripples", 0, []), inputSignal.ripple && data("ripple") && state("ripples", 1, [])
         )
     ))();
+
+    const rippleStyles = ` @keyframes ripple {
+            0% { width: 0; height: 0; opacity: 0.5; }
+            100% { width: 400px; height: 400px; opacity: 0; }
+        }
+    `;
   /* ────────────────────────────────────────────────────────────────────────────
    * RENDER
    * ──────────────────────────────────────────────────────────────────────────── */
 
   return (
-    <button
-      type={dataSignal.type}
-      onClick={dataSignal.onClick}
-      disabled={dataSignal.disabled}
-      aria-label={dataSignal["aria-label"]}
-      aria-haspopup={dataSignal["aria-haspopup"]}
-      aria-expanded={dataSignal["aria-expanded"]}
-      onMouseEnter={dataSignal.onMouseEnter}
-      onMouseLeave={dataSignal.onMouseLeave}
-      className={Object.values(layerSignal)
-        .map(layer => layer[0])
-        .filter(Boolean)
-        .join(" ")}
-    >
-      {dataSignal.children}
-    </button>
+    <>
+        <style>
+            {rippleStyles}
+        </style>
+
+        <button
+        type={dataSignal.type}
+        onClick={(e) => {
+            dataSignal.onClick?.(e);
+            dataSignal.ripple && handleRippleClick(e);
+        }}
+        disabled={dataSignal.disabled}
+        aria-label={dataSignal["aria-label"]}
+        aria-haspopup={dataSignal["aria-haspopup"]}
+        aria-expanded={dataSignal["aria-expanded"]}
+        onMouseEnter={dataSignal.onMouseEnter}
+        onMouseLeave={dataSignal.onMouseLeave}
+        className={classes(layerSignal.btn)}
+        >
+        
+        {dataSignal.children}
+
+        {dataSignal.ripple && (stateSignal.ripples?.get || [] ).map(ripple => (
+            <span
+                key={ripple.id}
+                className={classes(layerSignal.ripple)}
+                style={{
+                    left: ripple.x,
+                    top: ripple.y,
+                    animation: 'ripple 2s ease-out'
+                }}
+            />
+        ))}
+
+        </button>
+    </>
   );
 }
+
