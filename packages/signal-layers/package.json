@@ -1,6 +1,6 @@
 {
   "name": "signal-layers",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "A minimalist, framework-agnostic component library where components respond to signals of intention, not rigid variants or configuration APIs",
   "type": "module",
   "main": "./index.js",

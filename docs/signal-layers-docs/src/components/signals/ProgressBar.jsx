@@ -1,30 +1,30 @@
-export function Spinner(contract = {}) {
+export function ProgressBar(contract = {}) {
   /* ────────────────────────────────────────────────────────────────────────────
    * CONTRACT
    * ────────────────────────────────────────────────────────────────────────────
-   * 
-   * Spinner - Animated loading indicator with customizable appearance
    *
-   * Foundation: CSS animated div with spinning border
+   * ProgressBar - Visual progress indicator with customizable styling
+   *
+   * Foundation: HTML progress element with enhanced styling
    *
    * Signals:
-   *   Size: xs, sm, md, lg, xl
-   *   Color: light, primary, danger
-   *   Border: thin, thick
-   *   Animation: spinSlow, spinFast, pause
+   *   Size: xs, sm, md, lg, xl, responsive
+   *   Color: primary, success, danger, neutral, transparent
    *   Layout: inline, block, centered
-   *   Visibility: transparent
+   *   Shape: square
    *
    * Data:
-   *   ariaLabel - Accessibility label for screen readers
+   *   value - Progress value (0-100)
+   *   max - Maximum progress value
    *
-   * Defaults: md, inline, spin
+   * Defaults: md, block, primary
    *
    * Usage:
-   * <Spinner />
-   * <Spinner lg primary />
-   * <Spinner sm light transparent />
-   * 
+   * <ProgressBar value={50} />
+   * <ProgressBar value={75} success lg />
+   * <ProgressBar value={30} danger transparent />
+   *
+   *
    * ──────────────────────────────────────────────────────────────────────────── */
 
   const [inputSignal, layerSignal, dataSignal] = [{ ...contract }, {}, {}];
@@ -38,118 +38,99 @@ export function Spinner(contract = {}) {
      (layerSignal[name][0] = className));
 
   const data = (name, key = name) =>
-    inputSignal[key] && (dataSignal[name] = inputSignal[key]);
-
-  const classes = (layers = {}) =>
-    Object.values(layers).map(l => l[0]).filter(Boolean).join(" ");
+    dataSignal[key] !== undefined &&
+    (dataSignal[name] = dataSignal[key]);
 
   /* ────────────────────────────────────────────────────────────────────────────
-   * BASE LAYERS
+   * LAYERS
    * ──────────────────────────────────────────────────────────────────────────── */
-    let spinner;
-       (() => 
+    let progressbar;
+     (() => 
         (
-            spinner = {
-                layout:layer("layout"),
-                size:layer("size"),       
-                color:layer("color"),      
-                border:layer("border"),     
-                animation:layer("animation"),  
-                visibility:layer("visibility") 
+            progressbar = {
+                base: layer("base", "progressbar"),
+                size: layer("size", "progressbar"),
+                color: layer("color", "progressbar"),
+                shape: layer("shape", "progressbar"),
+                layout: layer("layout", "progressbar")
             }
         )
     )(),
-  /* ────────────────────────────────────────────────────────────────────────────
+ /* ────────────────────────────────────────────────────────────────────────────
    * DEFAULTS
    * ──────────────────────────────────────────────────────────────────────────── */
     (() => 
         (
-                spinner.layout("inline-flex items-center justify-center"),
-                spinner.color("border-black/20 border-t-black"),
-                spinner.border("border-2 rounded-full"),
-                spinner.animation("animate-spin"),
-                spinner.visibility("opacity-100"),
-                spinner.size("w-6 h-6")
+            progressbar.base("[&::-webkit-progress-value]:transition-all [&::-webkit-progress-bar]:transition-all [&::-moz-progress-bar]:transition-all" ),
+            progressbar.shape("[&::-webkit-progress-value]:rounded-full [&::-webkit-progress-bar]:rounded-full [&::-moz-progress-bar]:rounded-full" ),
+            progressbar.color("[&::-webkit-progress-value]:bg-violet-400 [&::-webkit-progress-bar]:bg-slate-300 [&::-moz-progress-bar]:bg-violet-400" ),
+            progressbar.size("h-2 w-32"),
+            progressbar.layout("block")
         )
     )(),
   /* ────────────────────────────────────────────────────────────────────────────
-   * SIZE SIGNALS
+   * SHAPE SIGNALS
    * ──────────────────────────────────────────────────────────────────────────── */
-  (() => 
+    (() => 
         (
-              inputSignal.xs && spinner.size("w-3 h-3 border"),
-              inputSignal.sm && spinner.size("w-4 h-4 border-2"),
-              inputSignal.md && spinner.size("w-6 h-6 border-2"),
-              inputSignal.lg && spinner.size("w-8 h-8 border-4"),
-              inputSignal.xl && spinner.size("w-12 h-12 border-4")
+           inputSignal.square       && progressbar.shape(`[&::-webkit-progress-bar]:rounded-none [&::-webkit-progress-value]:rounded-none [&::-moz-progress-bar]:rounded-none`)
         )
     )(),
   /* ────────────────────────────────────────────────────────────────────────────
    * COLOR SIGNALS
    * ──────────────────────────────────────────────────────────────────────────── */
-  (() => 
+    (() => 
         (
-           
-              inputSignal.light && spinner.color("border-white/30 border-t-white"),
-              inputSignal.primary && spinner.color("border-blue-600/30 border-t-blue-500"),
-              inputSignal.danger && spinner.color("border-red-600/30 border-t-red-500")
+            inputSignal.primary      && progressbar.color(`[&::-webkit-progress-bar]:bg-slate-300 [&::-moz-progress-bar]:bg-blue-500 [&::-webkit-progress-value]:bg-blue-500`),
+            inputSignal.success      && progressbar.color(`[&::-webkit-progress-bar]:bg-slate-300 [&::-moz-progress-bar]:bg-green-500 [&::-webkit-progress-value]:bg-green-500`),
+            inputSignal.danger       && progressbar.color(`[&::-webkit-progress-bar]:bg-slate-300 [&::-moz-progress-bar]:bg-red-500 [&::-webkit-progress-value]:bg-red-500`),
+            inputSignal.neutral      && progressbar.color(`[&::-webkit-progress-bar]:bg-slate-300 [&::-moz-progress-bar]:bg-gray-500 [&::-webkit-progress-value]:bg-gray-500`),
+            inputSignal.transparent  && progressbar.color(`[&::-webkit-progress-bar]:bg-transparent [&::-moz-progress-bar]:bg-transparent [&::-webkit-progress-value]:bg-transparent`)
         )
     )(),
   /* ────────────────────────────────────────────────────────────────────────────
-   * BORDER SIGNALS
+   * SIZE SIGNALS
    * ──────────────────────────────────────────────────────────────────────────── */
-  (() => 
+    (() => 
         (
-           
-              inputSignal.thin && spinner.border("border rounded-full"),
-              inputSignal.thick && spinner.border("border-4 rounded-full")
-        )
-    )(),
-   /* ────────────────────────────────────────────────────────────────────────────
-   * ANIMATION SIGNALS
-   * ──────────────────────────────────────────────────────────────────────────── */
-  (() => 
-        (
-           
-              inputSignal.spinSlow && spinner.animation("animate-spin [animation-duration:1.5s]"),
-              inputSignal.spinFast && spinner.animation("animate-spin [animation-duration:.6s]"),
-              inputSignal.pause && spinner.animation("animate-spin [animation-play-state:paused]")
+            inputSignal.sm           && progressbar.size("h-1 w-16"),
+            inputSignal.md           && progressbar.size("h-2 w-32"),
+            inputSignal.lg           && progressbar.size("h-3 w-48"),
+            inputSignal.xl           && progressbar.size("h-4 w-64"),
+            inputSignal.responsive   && progressbar.size("h-2 w-full")
         )
     )(),
   /* ────────────────────────────────────────────────────────────────────────────
    * LAYOUT SIGNALS
    * ──────────────────────────────────────────────────────────────────────────── */
-  (() => 
+    (() => 
         (
-              inputSignal.inline && spinner.layout("inline-flex"),
-              inputSignal.block && spinner.layout("block mx-auto"),
-              inputSignal.centered && spinner.layout("flex mx-auto")
-        )
-    )(),
-  /* ────────────────────────────────────────────────────────────────────────────
-   * VISIBILITY SIGNALS
-   * ──────────────────────────────────────────────────────────────────────────── */
-  (() => 
-        (
-              inputSignal.transparent && spinner.visibility("opacity-25")
+            inputSignal.inline       && progressbar.layout("inline-block"),
+            inputSignal.block        && progressbar.layout("block"),
+            inputSignal.centered     && progressbar.layout("mx-auto")
         )
     )(),
   /* ────────────────────────────────────────────────────────────────────────────
    * DATA
    * ──────────────────────────────────────────────────────────────────────────── */
-  (() => 
+    (() => 
         (
-            inputSignal.ariaLabel && data("ariaLabel")
+            inputSignal.value       && data("value"),
+            inputSignal.max         && data("max")
         )
     )();
+    const value = dataSignal.value !== undefined ? Math.min(100, Math.max(0, Number(dataSignal.value))) : 0;
   /* ────────────────────────────────────────────────────────────────────────────
    * RENDER
    * ──────────────────────────────────────────────────────────────────────────── */
   return (
-    <div
-      role="status"
-      aria-label={dataSignal.ariaLabel || "loading"}
-      className={classes(layerSignal)}
+    <progress
+      value={value}
+      max={dataSignal.max ?? 100}
+      className={Object.values(layerSignal)
+        .map(l => l[0])
+        .filter(Boolean)
+        .join(" ")}
     />
   );
 }
