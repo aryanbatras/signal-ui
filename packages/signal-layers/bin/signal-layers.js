@@ -8,7 +8,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const componentsDir = join(__dirname, '../src');
-const targetDir = join(process.cwd(), 'src/components/signal');
+const targetDir = join(process.cwd(), 'src/components/signal-layers');
 
 function ensureDir(dir) {
   if (!existsSync(dir)) {
@@ -34,7 +34,7 @@ function addComponent(componentName) {
   }
 
   copyFileSync(sourceFile, targetFile);
-  console.log(`✓ Added ${componentName} to components/signals/${componentName}.jsx`);
+  console.log(`✓ Added ${componentName} to components/signal-layers/${componentName}.jsx`);
 }
 
 function copyAll() {
@@ -51,13 +51,13 @@ function copyAll() {
 
       if (!existsSync(targetFile)) {
         copyFileSync(sourceFile, targetFile);
-        console.log(`✓ Added ${componentName} to components/signals/${componentName}.jsx`);
+        console.log(`✓ Added ${componentName} to components/signal-layers/${componentName}.jsx`);
       } else {
         console.log(`- Skipped ${componentName} (already exists)`);
       }
     });
     
-    console.log(`\nInstalled ${components.length} components to components/signals/`);
+    console.log(`\nInstalled ${components.length} components to components/signal-layers/`);
   } catch (err) {
     console.error('Could not install components:', err.message);
   }
