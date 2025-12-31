@@ -49,18 +49,74 @@ It's designed to be simple, flexible, and easy to integrate into any project. Wh
 
 ## Comparison
 
-| Feature | Traditional Approach | Signal Layers |
-|---------|---------------------|---------------|
-| Simplicity | Complex | Simple |
-| Readability | Difficult | Elegant |
-| Learning Curve | Steep | Gentle |
-| Debugging | Difficult | Easy |
-| Configuration | Complex | No need |
-| Intent-driven Developer Experience | Poor | Great |
-| Dependency Free | No | Yes |
-| Own your components completely | No | Yes |
-
-Simple. Clean. Intent-driven. Zero-config. No boilerplate.
+ Comparison Matrix
+| Approach | Abstraction | Ownership | Customization |
+|----------|-------------|-----------|---------------|
+| Traditional UI Libraries | High | Low | Limited |
+| Copyable Components | Low | High | Complex |
+| Signal UI | Balanced | Full | Simple
 
 
+## Key Differentiators
 
+No dependency hell - Copy once, own forever.
+No variant explosion - Intent-driven signals instead of enums.
+No documentation hunting - Self-documenting code.
+No design lock-in - Adapt to any design system in seconds.
+
+## Core Principles
+Intention over configuration - Express what you want, not how to configure it.
+Infinite customization - Modify any component without breaking functionality.
+Developer ownership - You own the code, not the library.
+
+
+Express what you want, not how to configure it.
+Components understand intent, not just props.
+Code reads like natural language.
+Infinite Customization
+
+Single-line modifications without breaking functionality.
+Add/remove signals without affecting existing behavior.
+Customize once, use infinitely.
+Developer Ownership
+
+You own the code, not the library.
+No dependency chains or version conflicts.
+Modify, extend, or replace any component.
+Exact Pain Point (One-Liners)
+Configuration Hell
+
+Developers waste hours memorizing API documentation.
+Variant props create exponential complexity.
+Boilerplate code overwhelms actual functionality.
+Design Lock-in
+
+Traditional libraries force their design system.
+Copyable components are too complex to modify.
+No middle ground between abstraction and ownership.
+Maintenance Burden
+
+Component updates break existing functionality.
+Version conflicts create dependency hell.
+Documentation becomes outdated instantly.
+Exact Philosophy (One-Liners)
+Signal-Based Architecture
+
+Dimensions define visual/behavioral characteristics.
+Signals group dimensions into meaningful intent.
+Layers organize signals for semantic clarity.
+Self-Documenting Code
+
+Components explain their own capabilities.
+No external documentation required.
+Intent signals are human-readable.
+Zero-Abstraction Balance
+
+No hidden magic or black boxes.
+Simple enough to understand immediately.
+Powerful enough for production use.
+Semantic Grouping
+
+Unlike Tailwind's utility classes, signals group related dimensions.
+Intent signals express complete design decisions.
+Maintainable through clear semantic meaning.
