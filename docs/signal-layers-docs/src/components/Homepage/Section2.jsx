@@ -12,8 +12,8 @@ export function Section2() {
                 scrollTrigger: { 
                     trigger: sectionRef.current, 
                     start: "top 85%", 
-                    end: "center 90%",
-                    scrub: 1.5
+                    end: "bottom 90%",
+                    scrub: 0.8
                 }
             })
             .from(titleRef.current, { 

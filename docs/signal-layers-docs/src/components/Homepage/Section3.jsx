@@ -1,8 +1,6 @@
 import { useRef, useEffect } from "react";
 import gsap from 'gsap';
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import codeImage from '../../assets/signalutils.png';
-gsap.registerPlugin(ScrollTrigger);
 
 export function Section3() {
     const sectionRef = useRef(null);
@@ -17,7 +15,7 @@ export function Section3() {
                     trigger: sectionRef.current,
                     start: "top 90%",
                     end: "top 5%",
-                    scrub: 3.2
+                    scrub: 1
                 }
             })
                 .from(titleRef.current, {

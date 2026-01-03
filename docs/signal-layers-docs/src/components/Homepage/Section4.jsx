@@ -1,7 +1,5 @@
 import { useRef, useEffect } from "react";
 import gsap from 'gsap';
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-gsap.registerPlugin(ScrollTrigger);
 
 export function Section4() {
     const sectionRef = useRef(null);
@@ -20,7 +18,7 @@ export function Section4() {
                     trigger: sectionRef.current,
                     start: "top 85%",
                     end: "bottom 70%",
-                    scrub: 2
+                    scrub: 1
                 }
             })
                 .from(titleRef.current, {

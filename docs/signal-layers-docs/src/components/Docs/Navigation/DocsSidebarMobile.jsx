@@ -3,6 +3,7 @@ import { RxCross1 } from "react-icons/rx";
 import { Link } from "react-router-dom";
 import { useSidebar } from "../../../context/SidebarContext";
 import { docsSections } from "./DocsData";
+import logo from '../../../assets/signaluilogo.png';
 
 export function DocsSidebarMobile(){
     const { closeSidebar, toggleSidebar } = useSidebar();
@@ -13,7 +14,7 @@ export function DocsSidebarMobile(){
             <div className="flex flex-row items-center justify-between">
 
                 <Link to="/" className="text-lg font-normal cursor-pointer hover:text-gray-600 text-black">
-                   <img src="/src/assets/signaluilogo.png" alt="Signal UI Logo" className="h-10 w-32 px-2 object-cover" />
+                   <img src={logo} alt="Signal UI Logo" className="h-10 w-32 px-2 object-cover" />
                 </Link>
 
                   <button className="self-end p-2 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer">

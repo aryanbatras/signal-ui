@@ -13,7 +13,7 @@ export function Section1() {
                     trigger: sectionRef.current,
                     start: "top 100%",
                     end: "bottom 85%",
-                    scrub: 3
+                    scrub: 1.5
                 }
             })
                 .from(titleRef.current, {
