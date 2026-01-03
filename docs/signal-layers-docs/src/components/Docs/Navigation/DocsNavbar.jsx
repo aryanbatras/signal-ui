@@ -18,7 +18,7 @@ export function DocsNavbar() {
                         <CiMenuBurger className="h-8 w-8 text-black" />
                 </button>
 
-                <Link to="/" className="text-lg font-normal cursor-pointer hover:text-gray-600 text-black lg:fixed">
+                <Link to="/" className="text-lg font-normal cursor-pointer hover:text-gray-600 text-black lg:fixed" onClick={() => window.scrollTo(0, 0)}>
                     <img src={logo} alt="Signal UI Logo" className="w-32 h-auto" />
                 </Link>
             </div>
