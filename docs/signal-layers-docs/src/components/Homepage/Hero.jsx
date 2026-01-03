@@ -5,6 +5,7 @@ import { BTN_SIGNALS } from "./signals";
 import { Link } from "react-router-dom";
 import { FaReact } from "react-icons/fa";
 import { RiTailwindCssFill } from "react-icons/ri";
+import logoVideo from '../../assets/signaluilogovideo.mp4';
 
 export function Hero() {
     const [copyCodeToggle, setCopyCodeToggle] = useState(false);
@@ -51,7 +52,7 @@ export function Hero() {
         <div className="min-h-screen min-w-screen p-16 flex flex-col items-center justify-center gap-6 bg-white">
 
             <div className="flex flex-row lg:flex-col items-center gap-4">
-                <video src="src/assets/signaluilogovideo.mp4" autoPlay loop muted playsInline className="w-20 h-auto lg:w-50 max-w-none object-cover bg-gray-300 rounded-full" />
+                <video src={logoVideo} autoPlay loop muted playsInline className="w-20 h-auto lg:w-50 max-w-none object-cover bg-gray-300 rounded-full" />
                 <h1 className="text-5xl lg:text-9xl font-bold"> Signal UI</h1>
             </div>
             <p className="text-2xl pb-8">Simple. Clean. Intent-driven.</p>

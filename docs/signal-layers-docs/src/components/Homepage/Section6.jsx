@@ -1,11 +1,12 @@
 import { GoHeartFill } from "react-icons/go";
 import { VscVscode } from "react-icons/vsc";
+import logoVideo from '../../assets/signaluilogovideo.mp4';
 export function Section6() {
     return (
         <div className="min-h-screen min-w-screen p-16 flex flex-col items-center justify-center gap-12 bg-white">
 
             <div className="flex flex-row lg:flex-col items-center gap-8">
-                <video src="src/assets/signaluilogovideo.mp4" autoPlay loop muted playsInline className="w-20 h-auto lg:w-50 max-w-none object-cover bg-gray-300 rounded-full" />
+                <video src={logoVideo} autoPlay loop muted playsInline className="w-20 h-auto lg:w-50 max-w-none object-cover bg-gray-300 rounded-full" />
                 <h1 className="text-5xl lg:text-9xl font-bold">Open Source</h1>
             </div>
             

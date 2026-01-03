@@ -1,6 +1,7 @@
 import { useRef, useEffect } from "react";
 import gsap from 'gsap';
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import codeImage from '../../assets/signalutils.png';
 gsap.registerPlugin(ScrollTrigger);
 
 export function Section3() {
@@ -65,7 +66,7 @@ export function Section3() {
 
                         <div className="bg-black/60 backdrop-blur-sm rounded-2xl border border-gray-800">
                             <img
-                                src="/src/assets/signalutils.png"
+                                src={codeImage}
                                 alt="Signal Utils Code"
                                 className="w-full h-auto"
                             />

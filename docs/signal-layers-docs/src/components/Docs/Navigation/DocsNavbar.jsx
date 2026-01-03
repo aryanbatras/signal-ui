@@ -2,6 +2,7 @@ import { FaGithub } from "react-icons/fa";
 import { CiMenuBurger } from "react-icons/ci";
 import { Link } from "react-router-dom";
 import { useSidebar } from "../../../context/SidebarContext";
+import logo from '../../../assets/signaluilogo.png';
 
 export function DocsNavbar() {
     const { toggleSidebar } = useSidebar();
@@ -18,7 +19,7 @@ export function DocsNavbar() {
                 </button>
 
                 <Link to="/" className="text-lg font-normal cursor-pointer hover:text-gray-600 text-black lg:fixed">
-                    <img src="/src/assets/signaluilogo.png" alt="Signal UI Logo" className="w-32 h-auto" />
+                    <img src={logo} alt="Signal UI Logo" className="w-32 h-auto" />
                 </Link>
             </div>
 
