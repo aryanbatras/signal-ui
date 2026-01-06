@@ -260,7 +260,6 @@ MIT License - feel free to use, modify, and distribute.
 - **Issues**: https://github.com/aryanbatras/minimalist-ui/issues
 - **NPM**: https://www.npmjs.com/package/signal-layers
 
-
 ## Tailwind CSS Settings for Development
 
 To get autocompletion and hover information for the signals,
