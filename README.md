@@ -269,7 +269,3 @@ add the following to your vscode settings.json :
 "tailwindCSS.experimental.classRegex": [
   ["\\b\\w+\\s*\\(\\s*[\"'`]([^\"'`]*)[\"'`]"]
 ]
-
-"tailwindCSS.includePaths": [
-  "${workspaceFolder}/packages/signal-layers/src"
-]
